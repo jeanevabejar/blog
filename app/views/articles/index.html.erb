@@ -1,0 +1,17 @@
+<h1>Articles</h1>
+<%= link_to "Create New Article", new_article_path %>
+
+
+<table>
+     <tr>
+     <th>title</th>
+     <th>author</th>
+    </tr>
+    <% @articles.each do |article| %>
+      <tr>
+        <td><%= link_to article.title, article%></td>
+        <td><%= article.author%></td>
+    </tr>
+    <%end%>
+</table>
+
