@@ -1,10 +1,10 @@
 class ArticlesController < ApplicationController
+    before_action :set_article, except: [:index, :new, :create] # only: [:show, :edit, :update, :destroy]
     def index
         @articles = Article.all
     end
 
     def show 
-        @article = Article.find(params[:id])
     rescue ActiveRecord::RecordNotFound
         redirect_to root_path
     end
@@ -22,9 +22,29 @@ class ArticlesController < ApplicationController
         end
     end
 
+    def edit
+    end
+
+    def update
+        if @article.update(article_params)
+            redirect_to @article 
+        else
+            render :edit, status: :unprocessable_entity
+        end
+    end
+
+    def destroy
+        @article.destroy
+        redirect_to root_path
+    end
+
     private 
 
     def article_params
         params.required(:article).permit(:title, :link, :author, :category)
+    end
+
+    def set_article
+        @article = Article.find(params[:id])
     end
 end
